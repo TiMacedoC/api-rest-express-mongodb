@@ -1,5 +1,5 @@
 // const app = require('./expressConfig')
-import app from './expressConfig.js'
+import app from '../config/expressConfig.js'
 
 const livros = [
     { id: 1, titulo: "Senhor dos Anéis" },
@@ -7,15 +7,39 @@ const livros = [
 ]
 
 app.get('/', (req, res) => {
-
     res.status(200).send("Curso de node")
-
 })
 
 app.get('/livros', (req, res) => {
-
     res.status(200).send(livros)
-
 })
+
+app.post('/livros', (req, res) => {
+    livros.push(req.body)
+    res.status(201).send("post efetuado")
+})
+
+app.put('/livros/:id', (req, res) => {
+    const id = req.params.id
+
+    const index = findById(id)
+    livros[index].titulo = req.body.titulo
+
+    res.status(201).send(livros[index])
+})
+
+app.get('/livros/:id', (req, res) => {
+    const id = req.params.id
+
+    const index = findById(id)
+
+    res.status(200).send(index !== -1 ? livros[index] : "Nenhum livro encontrado")
+})
+
+function findById(id) {
+    return livros.findIndex(livro => livro.id == id)
+}
+
+
 
 export default app

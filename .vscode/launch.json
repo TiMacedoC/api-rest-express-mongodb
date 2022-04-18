@@ -1,0 +1,22 @@
+{
+    //https://cursos.alura.com.br/extra/alura-mais/debugando-projetos-nodejs-no-vscode-c23
+    //Configurações do launck.json do debugger	
+    //tem que dar o comando: nodemon --inspect index.js
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Nodemon",
+            "processId": "${command:PickProcess}",
+            "protocol": "inspector",
+            "restart": true,
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        }
+    ]
+}
