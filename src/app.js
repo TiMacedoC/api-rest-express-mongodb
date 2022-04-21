@@ -14,6 +14,12 @@ app.get('/livros', (req, res) => {
     res.status(200).send(livros)
 })
 
+app.get('/livros/:id', (req, res) => {
+    const id = req.params.id
+    const index = findById(id)
+    res.status(200).send(index !== -1 ? livros[index] : "Nenhum livro encontrado")
+})
+
 app.post('/livros', (req, res) => {
     livros.push(req.body)
     res.status(201).send("post efetuado")
@@ -28,18 +34,17 @@ app.put('/livros/:id', (req, res) => {
     res.status(201).send(livros[index])
 })
 
-app.get('/livros/:id', (req, res) => {
+app.delete('/livros/:id', (req, res) => {
     const id = req.params.id
-
     const index = findById(id)
+    livros.splice(index, 1)
 
-    res.status(200).send(index !== -1 ? livros[index] : "Nenhum livro encontrado")
+    res.send(`Livro ${id} excluído com sucesso`)
+
 })
 
 function findById(id) {
     return livros.findIndex(livro => livro.id == id)
 }
-
-
 
 export default app
