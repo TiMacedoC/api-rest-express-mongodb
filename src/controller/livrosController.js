@@ -1,26 +1,34 @@
 import livros from "../models/Livro.js"
+import autores from "../models/Autor.js"
+
 
 class LivroController {
 
     listarLivros(req, res) {
-        livros.find((erro, livros) => {
-            if (erro) {
-                res.send({ error: erro.message })
-            } else {
-                res.send(livros)
-            }
-        })
+        livros.find()
+            .populate('autor')
+            .exec(
+                (erro, livros) => {
+                    if (erro) {
+                        console.log('erro:', erro)
+                        res.send({ error: erro.message })
+                    } else {
+                        res.send(livros)
+                    }
+                })
     }
 
     listarLivroPorId(req, res) {
         const id = req.params.id
-        livros.findById(id, (error, livro) => {
-            if (error) {
-                res.status(400).send(error)
-            } else {
-                res.status(200).send(livro)
-            }
-        })
+        livros.findById(id)
+            .populate('autor', 'nome')
+            .exec((error, livro) => {
+                if (error) {
+                    res.status(400).send(error)
+                } else {
+                    res.status(200).send(livro)
+                }
+            })
     }
 
     cadastrarLivro(req, res) {
