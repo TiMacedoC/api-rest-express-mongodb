@@ -1,13 +1,13 @@
 import express from 'express';
-import LivrosController from '../controller/livrosController.js';
+import livrosController from '../controller/livrosController.js';
 
 const router = express.Router()
 
 router
-    .get("/livros", LivrosController.listarLivros)
-    .get("/livros/:id", LivrosController.listarLivroPorId)
-    .post("/livros", LivrosController.cadastrarLivro)
-    .put("/livros/:id", LivrosController.atualizarLivro)
-    .delete("/livros/:id", LivrosController.apagarLivro)
+    .get("/livros", livrosController.listarLivros)
+    .get("/livros/:id", livrosController.listarLivroPorId)
+    .post("/livros", livrosController.cadastrarLivro)
+    .put("/livros/:id", livrosController.atualizarLivro)
+    .delete("/livros/:id", livrosController.apagarLivro)
 
 export default router

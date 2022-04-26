@@ -1,4 +1,5 @@
 import livros from './livrosRoutes.js'
+import autores from './autoresRoutes.js'
 
 const routes = (app) => {
 
@@ -6,7 +7,10 @@ const routes = (app) => {
         res.status(200).send({ message: "curso de node" })
     })
 
-    app.use(livros)
+    app.use(
+        livros,
+        autores
+    )
 
 }
 
