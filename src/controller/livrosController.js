@@ -1,5 +1,4 @@
 import livros from "../models/Livro.js"
-import autores from "../models/Autor.js"
 
 
 class LivroController {
@@ -29,6 +28,36 @@ class LivroController {
                     res.status(200).send(livro)
                 }
             })
+    }
+
+    listarLivrosPorEditora(req, res) {
+        const { busca } = req.body
+
+        //Primeiro testa se a requisição checou com um body
+        if (!busca) {
+            res.status(400).send({
+                message: "req json body is needed",
+                exemploDeBody: { "busca": "nome da editora" }
+            })
+        } else {
+            livros.find()
+                .populate('autor')
+                .exec(
+                    (erro, livros) => {
+                        if (erro) {
+                            res.send(erro)
+                        } else {
+                            const result = livros.filter((livro) => livro.editora == busca)
+
+                            if (result.length > 0) {
+                                res.send(result)
+                            } else {
+                                res.send("nenhum livro encontrado")
+                            }
+                        }
+                    }
+                )
+        }
     }
 
     cadastrarLivro(req, res) {
@@ -70,6 +99,7 @@ class LivroController {
 
 
     }
+
 
 }
 
